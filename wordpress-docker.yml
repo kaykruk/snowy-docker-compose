@@ -1,0 +1,27 @@
+version: "3"
+services:
+  wordpress:
+    image: wordpress
+    ports:
+      - "8082:80"
+    depends_on:
+      - mysql
+      environment:
+        WORDPRESS_DB_HOST: mysql
+        WORDPRESS_DB_USER: root
+        WORDPRESS_DB_PASSWORD: "coffee"
+        WORDPRESS_DB_NAME: wordpress
+  mysql:
+    image: "mysql"
+    environment: 
+      MYSQL_DATABASE: wordpress
+      MYSQL_ROOT_PASSWORD: "coffee"
+    volumes:
+      - ./mysgl:/var/lib/mysql
+networks:
+  timeless:
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.56.1.0/24"
+
